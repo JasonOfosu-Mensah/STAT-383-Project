@@ -18,6 +18,7 @@ df_select <- df_2 %>%
 df_analysis <- df_select[sample(nrow(df_select), size = 1500),]
 
 
+
 #Function to draw plots, takes in x and y columns and axis titles
 draw_plots <- function(x_var,y_var,x_title,y_title) {
   plot_2 <- ggplot(df_analysis, aes(x = x_var, y = y_var)) +
@@ -26,21 +27,24 @@ draw_plots <- function(x_var,y_var,x_title,y_title) {
     theme_minimal() +
     labs(title=paste(x_title, y_title, sep = " vs ") , x=x_title, y=y_title)
   
-  # vector of R-squared values
-  r_squared_values <- c()
-  #vector of R values
-  r_values <- c()
+
+  #calculate R-squared value
+  lm_model <- lm(y_var ~ x_var, data = df_analysis)
+  rsquared <- summary(lm_model)$r.squared
   
-  #loop appends R-squared and R value calculated for x and y to vectors
-  for(i in 1:100){
-    lm_model <- lm(y_var ~ x_var, data = df_analysis)
-    rsquared <- summary(lm_model)$r.squared
-    r_squared_values <- c(r_squared_values,rsquared)
-    
-    r <- cor(x_var, y_var,use = "complete.obs")
-    r_values <- c(r_values,r)
-    
-  }
+  #calculate r value
+  r <- cor(x_var, y_var,use = "complete.obs")
+
+  
+  
+  # Add R-squared and R value annotated to plots 
+  plot_2 + annotate("text", x = max(x_var), y = max(y_var), 
+                    label = paste("R-squared =", round(rsquared, 3)),
+                    hjust = 3.9, vjust = 3.5, color = "black")+
+    annotate("text", x = max(x_var), y = max(y_var), 
+             label = paste("R-value =", round(r, 3)),
+             hjust = 3.9, vjust = 1.2, color = "gray33")
+}
   
   
   #Mean R-squared and R value annotated to plots 
