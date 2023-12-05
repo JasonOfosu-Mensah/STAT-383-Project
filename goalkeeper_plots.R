@@ -31,7 +31,7 @@ draw_plots <- function(x_var,y_var,x_title,y_title) {
   #vector of R values
   r_values <- c()
   
-  #loop appends R-squared and R value calculated for x and y to vector
+  #loop appends R-squared and R value calculated for x and y to vectors
   for(i in 1:100){
     lm_model <- lm(y_var ~ x_var, data = df_analysis)
     rsquared <- summary(lm_model)$r.squared
