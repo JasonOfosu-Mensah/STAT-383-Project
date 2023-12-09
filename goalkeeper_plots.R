@@ -46,15 +46,7 @@ draw_plots <- function(x_var,y_var,x_title,y_title) {
              hjust = 3.9, vjust = 1.2, color = "gray33")
 }
   
-  
-  #Mean R-squared and R value annotated to plots 
-  plot_2 + annotate("text", x = max(x_var), y = max(y_var), 
-                    label = paste("R-squared =", round(mean(r_squared_values), 3)),
-                    hjust = 3.9, vjust = 3.5, color = "black")+
-    annotate("text", x = max(x_var), y = max(y_var), 
-             label = paste("R-value =", round(mean(r_values), 3)),
-             hjust = 3.9, vjust = 1.2, color = "gray33")
-}
+
 
 #-----Innate-----------------------------------------------------
 #height vs overall
